@@ -29,26 +29,28 @@ public class AccountLedgerApp {
         System.out.println("x - Exit");
 
         while (appRunning){
+            String userInput = thescanner.nextLine();
+            switch (userInput.toUpperCase()){
+
+                case "D":
+                    addDeposit();
+                    break;
+                case "P":
+                    makePayment();
+                    break;
+                case "L":
+                    displayLedger();
+                case "X":
+                    appRunning = false;
+                default:
+                    System.out.println("Wrong input");
 
 
-
-
-
-
+            }
 
         }
 
-
-
-
-
-
     }
-
-
-
-
-
 
 
 // This method reads the transactions csv file and saves it to an array list
@@ -91,6 +93,64 @@ public class AccountLedgerApp {
             }
 
         }
+
+
+    public static void displayLedger(){
+        System.out.println("Ledger");
+        System.out.println("A - Display all entries");
+        System.out.println("D) Deposits - Display only the entries that are deposits into the account");
+        System.out.println("P) Payments - Display only the negative entries (or payments)");
+        System.out.println("R) Reports");
+        System.out.println("H) Home - go back to the home page");
+
+        while (appRunning){
+            String userInput = thescanner.nextLine();
+            switch (userInput.toUpperCase()){
+
+                case "A":
+                    displayAll();
+                    break;
+                case "D":
+                    displayDeposits();
+                    break;
+                case "P":
+                    displayPayments();
+                    break;
+                case "R":
+                    reports();
+                case "H":
+                    appRunning = false;
+                default:
+                    System.out.println("Wrong input");
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+    }
+
+
+    public static void addDeposit(){
+
+
+
+
+
+
+
+
+    }
+
+
+
 
 
     }
