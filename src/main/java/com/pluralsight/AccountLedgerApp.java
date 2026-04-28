@@ -298,14 +298,17 @@ public class AccountLedgerApp {
 
     public static void reports() {
         boolean appRunning = true;
-        System.out.println("1) Month To Date");
-        System.out.println("2) Previous Month");
-        System.out.println("3) Year To Date");
-        System.out.println("4) Previous Year");
-        System.out.println("5) Search by Vendor");
+
 
         while (appRunning) {
+
+            System.out.println("1) Month To Date");
+            System.out.println("2) Previous Month");
+            System.out.println("3) Year To Date");
+            System.out.println("4) Previous Year");
+            System.out.println("5) Search by Vendor");
             int UserInput = thescanner.nextInt();
+            thescanner.nextLine();
 
             switch (UserInput) {
                 case 1:
@@ -321,8 +324,13 @@ public class AccountLedgerApp {
                     searchPY();
                     break;
                 case 5:
-                    searchByV();
+                   searchByV();
                     break;
+                case 6:
+                //    customSearch();
+                    break;
+                case 0 :
+                    appRunning = false;
 
             }
 
@@ -357,11 +365,82 @@ public class AccountLedgerApp {
 
                 System.out.printf("%s|%s|%s|%s|%.2f\n", date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
 
+        }
+    }
+
+    public static void searchPm(){
+        LocalDate nowTime = LocalDate.now().minusMonths(1);
+        int newMonth = nowTime.getMonthValue();
+        int newYear = nowTime.getYear();
+
+        for (Transactions date : ledger) {
+            LocalDate timeyTime = LocalDate.parse(date.getDate());
+
+            int yearTime = timeyTime.getYear();
+            int monthTime = timeyTime.getMonthValue();
+
+
+            if (monthTime == newMonth &&  newYear == yearTime)
+
+                System.out.printf("%s|%s|%s|%s|%.2f\n", date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+
+
 
         }
 
+    }
+
+    public static void searchYTD(){
+
+        for (Transactions date : ledger) {
+            int thisYear = today.getYear();
+            LocalDate timeyTime = LocalDate.parse(date.getDate());
+
+            int yearTime = timeyTime.getYear();
+
+            if (yearTime == thisYear)
+
+                System.out.printf("%s|%s|%s|%s|%.2f\n", date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+
+
+
+        }
 
     }
+
+    public static void searchPY(){
+
+        for (Transactions date : ledger) {
+            int thisYear = today.getYear();
+            LocalDate timeyTime = LocalDate.parse(date.getDate());
+
+            int yearTime = timeyTime.getYear();
+
+            if (yearTime == thisYear - 1)
+
+                System.out.printf("%s|%s|%s|%s|%.2f\n", date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+
+
+
+        }
+    }
+
+    public static void searchByV(){
+        System.out.println("Enter the vendor: ");
+
+        String theVendor = thescanner.nextLine();
+
+        for (Transactions vendor : ledger){
+
+            if(theVendor.equals(vendor.getVendor())){
+
+                System.out.printf("%s|%s|%s|%s|%.2f\n", vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
+
+            }
+        }
+    }
+
+
 
 }
 
