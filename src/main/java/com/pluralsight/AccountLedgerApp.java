@@ -40,7 +40,7 @@ public class AccountLedgerApp {
                     makePayment();
                     break;
                 case "L":
-                  displayLedger();
+                    displayLedger();
                 case "X":
                     appRunning = false;
                 default:
@@ -88,9 +88,9 @@ public class AccountLedgerApp {
     }
 
 
-   public static void displayLedger() {
+    public static void displayLedger() {
         System.out.println("Ledger");
-         System.out.println("A - Display all entries");
+        System.out.println("A - Display all entries");
         System.out.println("D) Deposits - Display only the entries that are deposits into the account");
         System.out.println("P) Payments - Display only the negative entries (or payments)");
         System.out.println("R) Reports");
@@ -98,14 +98,14 @@ public class AccountLedgerApp {
 
         boolean appRunning = true;
 
-       while (appRunning) {
+        while (appRunning) {
             String userInput = thescanner.nextLine();
             switch (userInput.toUpperCase()) {
 
-               case "A":
+                case "A":
                     displayAll();
                     break;
-               case "D":
+                case "D":
                     displayDeposits();
                     break;
                 case "P":
@@ -114,136 +114,159 @@ public class AccountLedgerApp {
                 case "R":
                     reports();
                     break;
-               case "H":
+                case "H":
                     appRunning = false;
                 default:
                     System.out.println("Wrong input");
 
-
             }
-
         }
-
-
     }
 
-    // This methods prompts user for input, in the case a deposit, adds the recored info to the csv ledger file.
+    // This methods prompts user for input, in the case a deposit, adds the record info to the csv ledger file.
     public static void addDeposit() {
 
-            try {
-                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                DateTimeFormatter fmt1 =
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String dateAndTime = LocalDate.now().format(fmt1);
-                DateTimeFormatter fmt2 =
-                        DateTimeFormatter.ofPattern("HH:mm:ss");
-                String minuteAndSeconds = LocalTime.now().format(fmt2);
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            DateTimeFormatter fmt1 =
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dateAndTime = LocalDate.now().format(fmt1);
+            DateTimeFormatter fmt2 =
+                    DateTimeFormatter.ofPattern("HH:mm:ss");
+            String minuteAndSeconds = LocalTime.now().format(fmt2);
 
 
-                System.out.println("""
-                        ========================================= 
-                                      RECORD A DEPOSIT
-                        ========================================= """);
-                System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
-                String description = thescanner.nextLine();
-                System.out.print("Enter Payer/Client Name: ");
-                String vendor = thescanner.nextLine();
-                System.out.print("Enter Deposit Amount: ");
-                double amount = thescanner.nextDouble();
-                thescanner.nextLine();
-                String userinput = thescanner.nextLine();
-                System.out.println("Enter (x) to Exit -");
+            System.out.println("""
+                    ========================================= 
+                                  RECORD A DEPOSIT
+                    ========================================= """);
+            System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
+            String description = thescanner.nextLine();
+            System.out.print("Enter Payer/Client Name: ");
+            String vendor = thescanner.nextLine();
+            System.out.print("Enter Deposit Amount: ");
+            double amount = thescanner.nextDouble();
+            thescanner.nextLine();
+            String userinput = thescanner.nextLine();
+            System.out.println("Enter (x) to Exit -");
 
-                Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
-                ledger.add(deposit);
+            Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
+            ledger.add(deposit);
 
-                String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
-                bufferedWriter.write(formatBar);
-                bufferedWriter.close();
-                System.out.println("Deposit successfully recorded");
+            String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
+            bufferedWriter.write(formatBar);
+            bufferedWriter.close();
+            System.out.println("Deposit successfully recorded");
 
 
-            } catch (Exception e) {
-                System.out.println("invalid input");
-                throw new RuntimeException(e);
-            }
+        } catch (Exception e) {
+            System.out.println("invalid input");
+            throw new RuntimeException(e);
+        }
 
 
     }
 
     public static void makePayment() {
 
-            try {
-                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String dateAndTime = LocalDate.now().format(fmt1);
-                DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("HH:mm:ss");
-                String minuteAndSeconds = LocalTime.now().format(fmt2);
-                System.out.println("""
-                        ========================================= 
-                                      RECORD A DEBIT
-                        ========================================= """);
-                System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
-                String description = thescanner.nextLine();
-                System.out.print("Enter Payer/Client Name: ");
-                String vendor = thescanner.nextLine();
-                System.out.print("Enter Debit Amount: ");
-                double amount = thescanner.nextDouble();
-                thescanner.nextLine();
-                System.out.println("Enter (X) to Exit -");
-                String userinput = thescanner.nextLine();
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dateAndTime = LocalDate.now().format(fmt1);
+            DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String minuteAndSeconds = LocalTime.now().format(fmt2);
+            System.out.println("""
+                    ========================================= 
+                                  RECORD A DEBIT
+                    ========================================= """);
+            System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
+            String description = thescanner.nextLine();
+            System.out.print("Enter Payer/Client Name: ");
+            String vendor = thescanner.nextLine();
+            System.out.print("Enter Debit Amount: ");
+            double amount = thescanner.nextDouble();
+            thescanner.nextLine();
+            System.out.println("Enter (X) to Exit -");
+            String userinput = thescanner.nextLine();
 
 
-                Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
-                ledger.add(deposit);
+            Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
+            ledger.add(deposit);
 
-                String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, - amount);
-                bufferedWriter.write(formatBar);
-                bufferedWriter.close();
-                System.out.println("Deposit successfully recorded");
-
-
-            } catch (Exception e) {
-                System.out.println("invalid input");
-                throw new RuntimeException(e);
-            }
+            String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, -amount);
+            bufferedWriter.write(formatBar);
+            bufferedWriter.close();
+            System.out.println("Deposit successfully recorded");
 
 
-    }
-
-    public static void displayAll(){
-
-
-            System.out.print(
-                    """
-                            ======================================================================
-                               *                      Account Ledger                       *
-                            ======================================================================
-                             Date | Time |              Description        | Vendor     | Price
-                            ----------------------------------------------------------------------
-                            """
-            );
-
-            for (Transactions product : ledger) {
-                System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(),product.getAmount());
-
-            }
-            System.out.println(
-                    """
-                            ----------------------------------------------------------------------                   
-                            ======================================================================
-                            """
-            );
-
-
-
+        } catch (Exception e) {
+            System.out.println("invalid input");
+            throw new RuntimeException(e);
+        }
 
 
     }
 
-    public static void displayDeposits(){
+    public static void displayAll() {
+
+
+        System.out.print(
+                """
+                        ======================================================================
+                           *                      Account Ledger                       *
+                        ======================================================================
+                         Date | Time |              Description        | Vendor     | Price
+                        ----------------------------------------------------------------------
+                        """
+        );
+
+        for (Transactions product : ledger) {
+            System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+
+        }
+        System.out.println(
+                """
+                        ----------------------------------------------------------------------                   
+                        ======================================================================
+                        """
+        );
+
+
+    }
+
+    public static void displayDeposits() {
+
+        System.out.print(
+                """
+                        ======================================================================
+                           *                      Account Deposits                      *
+                        ======================================================================
+                         Date | Time |              Description        | Vendor     | Price
+                        ----------------------------------------------------------------------
+                        """
+        );
+
+        double deposits = 0.00;
+
+        for (Transactions product : ledger) {
+
+            if (deposits == product.getAmount())
+                System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+
+        }
+        System.out.println(
+                """
+                        ----------------------------------------------------------------------                   
+                        ======================================================================
+                        """
+        );
+
+
+    }
+
+    public static void displayPayments() {
 
         System.out.print(
                 """
@@ -259,8 +282,8 @@ public class AccountLedgerApp {
 
         for (Transactions product : ledger) {
 
-            if(debits == product.getAmount() )
-            System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(),product.getAmount());
+            if (product.getAmount() < debits)
+                System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
         }
         System.out.println(
@@ -271,14 +294,74 @@ public class AccountLedgerApp {
         );
 
 
+    }
+
+    public static void reports() {
+        boolean appRunning = true;
+        System.out.println("1) Month To Date");
+        System.out.println("2) Previous Month");
+        System.out.println("3) Year To Date");
+        System.out.println("4) Previous Year");
+        System.out.println("5) Search by Vendor");
+
+        while (appRunning) {
+            int UserInput = thescanner.nextInt();
+
+            switch (UserInput) {
+                case 1:
+                    searchMtM();
+                    break;
+                case 2:
+                    searchPm();
+                    break;
+                case 3:
+                    searchYTD();
+                    break;
+                case 4:
+                    searchPY();
+                    break;
+                case 5:
+                    searchByV();
+                    break;
+
+            }
+
+        }
+
+    }
+
+    public static void searchMtM() {
+        System.out.println("Enter the year: ");
+        int year = thescanner.nextInt();
+
+        System.out.println("Enter the month: ");
+        int month = thescanner.nextInt();
+
+        System.out.println("Enter the Day of Month: ");
+        int dOM = thescanner.nextInt();
+        thescanner.nextLine();
+
+        LocalDate userDate = LocalDate.of(year, month, dOM);
+        DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate userTime = LocalDate.parse(userDate.format(fmt1));
+        int userYtime = userTime.getYear();
+        int userMTime = userTime.getMonthValue();
+        for (Transactions date : ledger) {
+            LocalDate timeyTime = LocalDate.parse(date.getDate());
+
+            int yearTime = timeyTime.getYear();
+            int monthTime = timeyTime.getMonthValue();
 
 
+            if (userMTime ==  monthTime && yearTime == userYtime)
 
+                System.out.printf("%s|%s|%s|%s|%.2f\n", date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+
+
+        }
 
 
     }
 
-
 }
-
 
