@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,24 +15,50 @@ public class AccountLedgerApp {
     static LocalDateTime today = LocalDateTime.now();
     static Scanner thescanner = new Scanner(System.in);
     static ArrayList<Transactions> ledger = new ArrayList<>();
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_Purple = "\u001B[35m";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         getTransactions();
         homeScreen();
 
     }
 
     // menu for Home screen , prompt user to make a selection the calls methods based on their selection to perform certain task
-    public static void homeScreen() {
+    public static void homeScreen() throws InterruptedException {
+        System.out.println( ANSI_GREEN +
+        """
+╔════════════════════════════════════════════════╗
+║  █▀▄▀█ ▄▀█ ▀█▀ █▀█ █ ▀▄▀    █▄▄ ▄▀█ █▄░█ █▄▀░  ║
+║  █░▀░█ █▀█ ░█░ █▀▄ █ █░█    █▄█ █▀█ █░▀█ █░▀▄  ║
+╚════════════════════════════════════════════════╝
+""" + ANSI_RESET
+        );
+
         boolean appRunning = true;
-        System.out.println("D -Add Deposit");
-        System.out.println("P - Make Payment (Debit)");
-        System.out.println("L - Leger Display Ledger");
-        System.out.println("x - Exit");
+
 
         while (appRunning) {
+            System.out.print(ANSI_GREEN +
+                    """
+                    ==================================================
+                       🏦             PRODUCT MENU               🏦
+                    ==================================================
+                    """ + ANSI_RESET);
+            System.out.println(
+                    """
+                     D - Add Deposit
+                     P - Make Payment (Debit)
+                     L - Leger Display Ledger
+                     x - Exit """ );
+            System.out.print( ANSI_GREEN + """ 
+                ==================================================
+                Enter command:\s""" + ANSI_RESET);
             String userInput = thescanner.nextLine();
-            switch (userInput.toUpperCase()) {
+            switch (userInput.toUpperCase().trim()) {
 
                 case "D":
                     addDeposit();
@@ -41,8 +68,10 @@ public class AccountLedgerApp {
                     break;
                 case "L":
                     displayLedger();
+                    break;
                 case "X":
                     appRunning = false;
+                    break;
                 default:
                     System.out.println("Wrong input");
 
@@ -88,19 +117,21 @@ public class AccountLedgerApp {
     }
 
 
-    public static void displayLedger() {
-        System.out.println("Ledger");
-        System.out.println("A - Display all entries");
-        System.out.println("D) Deposits - Display only the entries that are deposits into the account");
-        System.out.println("P) Payments - Display only the negative entries (or payments)");
-        System.out.println("R) Reports");
-        System.out.println("H) Home - go back to the home page");
+    public static void displayLedger() throws InterruptedException {
+        loading1();
+
 
         boolean appRunning = true;
 
         while (appRunning) {
+            System.out.println("Ledger");
+            System.out.println("A - Display all entries");
+            System.out.println("D) Deposits - Display only the entries that are deposits into the account");
+            System.out.println("P) Payments - Display only the negative entries (or payments)");
+            System.out.println("R) Reports");
+            System.out.println("H) Home - go back to the home page");
             String userInput = thescanner.nextLine();
-            switch (userInput.toUpperCase()) {
+            switch (userInput.toUpperCase().trim()) {
 
                 case "A":
                     displayAll();
@@ -116,6 +147,8 @@ public class AccountLedgerApp {
                     break;
                 case "H":
                     appRunning = false;
+                    break;
+
                 default:
                     System.out.println("Wrong input");
 
@@ -209,73 +242,76 @@ public class AccountLedgerApp {
 
     }
 
-    public static void displayAll() {
+    public static void displayAll() throws InterruptedException {
+        loading1();
 
-
-        System.out.print(
+        ledger.sort(Comparator.comparing(Transactions::getDate).reversed());
+        System.out.print(ANSI_CYAN +
                 """
                         ======================================================================
                            *                      Account Ledger                       *
                         ======================================================================
                          Date | Time |              Description        | Vendor     | Price
                         ----------------------------------------------------------------------
-                        """
+                        """ + ANSI_RESET
         );
 
         for (Transactions product : ledger) {
-            System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+            System.out.printf("%s|%s|%s|%s|%.2f\n", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
         }
-        System.out.println(
+        System.out.println(ANSI_CYAN +
                 """
                         ----------------------------------------------------------------------                   
                         ======================================================================
-                        """
+                        """ + ANSI_RESET
         );
 
 
     }
 
     public static void displayDeposits() {
-
-        System.out.print(
+        ledger.sort(Comparator.comparing(Transactions::getDate).reversed());
+        System.out.print(ANSI_CYAN +
                 """
                         ======================================================================
                            *                      Account Deposits                      *
                         ======================================================================
                          Date | Time |              Description        | Vendor     | Price
                         ----------------------------------------------------------------------
-                        """
+                        """ + ANSI_RESET
         );
 
         double deposits = 0.00;
 
         for (Transactions product : ledger) {
 
-            if (deposits == product.getAmount())
-                System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+
+            if ( product.getAmount() > 0)
+
+                System.out.printf( "%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET , product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
         }
-        System.out.println(
+        System.out.println(ANSI_CYAN +
                 """
                         ----------------------------------------------------------------------                   
                         ======================================================================
-                        """
+                        """ + ANSI_RESET
         );
 
 
     }
 
     public static void displayPayments() {
-
-        System.out.print(
+        ledger.sort(Comparator.comparing(Transactions::getDate).reversed());
+        System.out.print(ANSI_CYAN +
                 """
                         ======================================================================
                            *                      Account Debits                       *
                         ======================================================================
                          Date | Time |              Description        | Vendor     | Price
                         ----------------------------------------------------------------------
-                        """
+                        """ + ANSI_RESET
         );
 
         double debits = 0.00;
@@ -283,20 +319,21 @@ public class AccountLedgerApp {
         for (Transactions product : ledger) {
 
             if (product.getAmount() < debits)
-                System.out.printf("%s|%s|%s|%s|%.2f", product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+                System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
         }
-        System.out.println(
+        System.out.println(ANSI_CYAN +
                 """
                         ----------------------------------------------------------------------                   
                         ======================================================================
-                        """
+                        """ + ANSI_RESET
         );
 
 
     }
 
-    public static void reports() {
+    public static void reports() throws InterruptedException {
+        loading1();
         boolean appRunning = true;
 
 
@@ -307,6 +344,7 @@ public class AccountLedgerApp {
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
             System.out.println("5) Search by Vendor");
+            System.out.println("0) Return home");
             int UserInput = thescanner.nextInt();
             thescanner.nextLine();
 
@@ -331,6 +369,7 @@ public class AccountLedgerApp {
                     break;
                 case 0 :
                     appRunning = false;
+                    break;
 
             }
 
@@ -339,13 +378,13 @@ public class AccountLedgerApp {
     }
 
     public static void searchMtM() {
-        System.out.println("Enter the year: ");
+        System.out.print("Enter the year: ");
         int year = thescanner.nextInt();
 
-        System.out.println("Enter the month: ");
+        System.out.print("Enter the month: ");
         int month = thescanner.nextInt();
 
-        System.out.println("Enter the Day of Month: ");
+        System.out.print("Enter the Day of Month: ");
         int dOM = thescanner.nextInt();
         thescanner.nextLine();
 
@@ -420,8 +459,6 @@ public class AccountLedgerApp {
 
                 System.out.printf("%s|%s|%s|%s|%.2f\n", date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
 
-
-
         }
     }
 
@@ -434,13 +471,32 @@ public class AccountLedgerApp {
 
             if(theVendor.equals(vendor.getVendor())){
 
-                System.out.printf("%s|%s|%s|%s|%.2f\n", vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
+                System.out.printf("%s|%s|%s|" + ANSI_Purple + "%s|" + ANSI_RESET + "%.2f\n", vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
 
             }
         }
     }
 
+    public static void loading1() throws InterruptedException {
 
+        for(int i = 1; i < 3; i++){
+            System.out.print("\rFethching Data [>     ]");
+            Thread.sleep(300);
+            System.out.print("\rFethching Data [>>    ]");
+            Thread.sleep(300);
+            System.out.print("\rFethching Data [>>>   ]");
+            Thread.sleep(300);
+            System.out.print("\rFethching Data [>>>>  ]");
+            Thread.sleep(300);
+            System.out.print("\rFethching Data [>>>>> ]");
+            Thread.sleep(300);
+            System.out.print("\rFethching Data [>>>>>>]");
+            Thread.sleep(300);
+
+        }
+        System.out.println();
+
+    }
 
 }
 
