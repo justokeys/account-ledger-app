@@ -42,7 +42,7 @@ public class AccountLedgerApp {
                         ╚════════════════════════════════════════════════╝
                         """ + ANSI_RESET
         );
-        TerminalArt.matrixDropFx();
+       // TerminalArt.matrixDropFx();
 
         boolean appRunning = true;
 
@@ -77,7 +77,7 @@ public class AccountLedgerApp {
                     break;
                 case "X":
                     appRunning = false;
-                    peaceOut();
+                  //  peaceOut();
                     break;
                 default:
                     System.out.println("Wrong input");
