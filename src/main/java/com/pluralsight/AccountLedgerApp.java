@@ -125,7 +125,7 @@ public class AccountLedgerApp {
 
     }
 
-
+// This method is for the display ledger menu
     public static void displayLedger() throws InterruptedException {
         clearScreen();
         loading1();
@@ -134,7 +134,7 @@ public class AccountLedgerApp {
         boolean appRunning = true;
 
         while (appRunning) {
-
+// display ledger menu prompts user to display desired data according to the menu options
             System.out.print(ANSI_GREEN +
                     """
                             ==================================================
@@ -150,8 +150,8 @@ public class AccountLedgerApp {
                     ==================================================
                     Enter command:\s""" + ANSI_RESET);
             String userInput = thescanner.nextLine();
+            // switch statement menu that as an input failsafe of default "wrong info" if the switch input condition is not met.
             switch (userInput.toUpperCase().trim()) {
-
                 case "A":
                     displayAll();
                     break;
@@ -177,7 +177,10 @@ public class AccountLedgerApp {
 
     // This methods prompts user for input, in the case a deposit, adds the record info to the csv ledger file.
     public static void addDeposit() {
-        clearScreen();
+        clearScreen();// clears terminal screen to have code and inputs display at the top of the screen
+        // To add a deposits I first got my filewriter so I can add to the current csv file
+        // formatted the dates to match the file format and set the formats to variables for the current time
+
 
         try {
             FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
@@ -194,6 +197,7 @@ public class AccountLedgerApp {
                                   RECORD A DEPOSIT
                     ========================================= """ + ANSI_RESET);
             String description = "";
+            // Userinput validation , I used while loop with try catch so the user is unable to input a "|" character ( this would break my csv file format leading to future crashes)
             boolean isVaLID = false;
             while (!isVaLID) {
                 try{
@@ -208,6 +212,7 @@ public class AccountLedgerApp {
                 }
             }
             String vendor = "";
+            // Same user input validation method used here to prevent wrong character input
             boolean vaild = true;
             while (vaild) {
                 try {
@@ -221,6 +226,8 @@ public class AccountLedgerApp {
 
                 }
             }
+            // User input validation to make sure user doest input and invalid numer
+            // also checks if the input is positive
             double amount = 0.0;
             boolean validN = false;
             while(!validN) {
@@ -248,6 +255,7 @@ public class AccountLedgerApp {
 
             Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, Math.abs(amount));
             ledger.add(deposit);
+            // string format to evenly space
 
             String formatBar = String.format("\n%-12s | %-10s | %-35s | %-20s |%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
             bufferedWriter.write(formatBar);
@@ -280,6 +288,7 @@ public class AccountLedgerApp {
                         ========================================= 
                                       RECORD A DEBIT
                         ========================================= """ + ANSI_RESET);
+                // Userinput validation , I used while loop with try catch so the user is unable to input a "|" character ( this would break my csv file format leading to future crashes)
                 String description = " ";
                 boolean isValid = true;
                 while (isValid) {
@@ -305,6 +314,8 @@ public class AccountLedgerApp {
                     }catch (Exception e){
                         System.out.println("Try again");
                     }
+                // User input validation to make sure user doest input and invalid number
+                // also checks if the input is negative
                 boolean validN = false;
                 double amount = 0;
                 while (!validN) {
@@ -347,24 +358,24 @@ public class AccountLedgerApp {
 
 
     }
-
+    // displays all account activity in the csv file in a formated display
     public static void displayAll() throws InterruptedException {
         clearScreen();
 
 
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                      Account Ledger                       *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                         All Activity                                        *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
         ledger.sort(Comparator.comparing(Transactions::getDate).thenComparing(Transactions::getTime).reversed());
         for (Transactions product : ledger) {
             if (product.getAmount() > 0) {
-                System.out.printf("%-12s | %-10s | %-35s | %-20s |" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+                System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
             } else
                 System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_RED + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
@@ -372,24 +383,24 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
 
 
     }
-
+    // Method to prints data from the start of the current month of account activity until current date
     public static void displayDeposits() {
         clearScreen();
         ledger.sort(Comparator.comparing(Transactions::getDate).thenComparing(Transactions::getTime).reversed());
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                      Account Deposits                      *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                       Account Deposits                                     *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
 
@@ -405,24 +416,24 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
 
 
     }
-
+// Displays all account (debits)/ Charges
     public static void displayPayments() {
         clearScreen();
         ledger.sort(Comparator.comparing(Transactions::getDate).reversed());
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                      Account Debits                       *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                       Account Debits                                       *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
 
@@ -436,14 +447,14 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
 
 
     }
-
+// Submenu (reports) for more user options to display more specific data
     public static void reports() throws InterruptedException {
         clearScreen();
         loading1();
@@ -470,6 +481,7 @@ public class AccountLedgerApp {
                     Enter command:\s""" + ANSI_RESET);
             int UserInput = thescanner.nextInt();
             thescanner.nextLine();
+            // switch statement menu that as a input failsafe of default "wrong info" if the switch input condition is not met
 
             switch (UserInput) {
                 case 1:
@@ -499,16 +511,16 @@ public class AccountLedgerApp {
         }
 
     }
-
+// Displays
     public static void searchMtM() {
         clearScreen();
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                        Month To Date                        *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                       Month To Date                                        *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
 
@@ -527,11 +539,12 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
     }
+    // Method to print last month of account activity
 
     public static void searchPm() {
         clearScreen();
@@ -540,11 +553,11 @@ public class AccountLedgerApp {
         int newYear = nowTime.getYear();
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                        Previous Month                       *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                       Previous Month                                       *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
 
@@ -554,7 +567,7 @@ public class AccountLedgerApp {
             int yearTime = timeyTime.getYear();
             int monthTime = timeyTime.getMonthValue();
 
-
+            // for each date in the ledger Arraylist, this loop compares current month to the previous in the ledger, if the month in the ledger is from the last month the system prints out the account csv data
             if (monthTime == newMonth && newYear == yearTime)
 
                 if (date.getAmount() > 0) {
@@ -567,26 +580,27 @@ public class AccountLedgerApp {
 
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
 
     }
+    // Method to prints data from the start of current year of account activity until current date
 
     public static void searchYTD() {
         clearScreen();
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                        Year To Date                        *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                        Year To Date                                        *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
 
-
+        // for each loop , that compares current year with years in the csv file account data. If the accounts match the same year which is this year set by localdate.now.The program prints the matching year data
         for (Transactions date : ledger) {
             int thisYear = today.getYear();
             LocalDate timeyTime = LocalDate.parse(date.getDate());
@@ -594,7 +608,7 @@ public class AccountLedgerApp {
             int yearTime = timeyTime.getYear();
 
             if (yearTime == thisYear)
-
+// prints out the positive balances green and the negative red
                 if (date.getAmount() > 0) {
                     System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
                 } else
@@ -604,27 +618,27 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
 
     }
-
+// Method to print the Previous year of account activity
     public static void searchPY() throws InterruptedException {
         clearScreen();
         loading2();
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                        Previous Year                       *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                        Previous Year                                       *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
 
-
+        // for each date in the ledger Arraylist, this loop compares last numerical year to years in the legder. if the years match it prints out the account csv data
         for (Transactions date : ledger) {
             int thisYear = today.getYear();
             LocalDate timeyTime = LocalDate.parse(date.getDate());
@@ -632,7 +646,7 @@ public class AccountLedgerApp {
             int yearTime = timeyTime.getYear();
 
             if (yearTime == thisYear - 1)
-
+                // prints out the positive balances green and the negative red
                 if (date.getAmount() > 0) {
                     System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
                 } else
@@ -641,22 +655,22 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
     }
-
+// This method prompts user to enter a vendor name from the account statement , loops through the ledger at matches the charaters in put from the user to match the input to csv data
     public static void searchByV() {
         clearScreen();
 
         System.out.print(ANSI_CYAN +
                 """
-                        ======================================================================
-                           *                       Vendor Search                       *
-                        ======================================================================
-                         Date | Time |              Description        | Vendor     | Price
-                        ----------------------------------------------------------------------
+                        =====================================================================================================
+                           *                                        Vendor Search                                        *
+                        =====================================================================================================
+                         Date        |   Time     |                  Description        | Vendor               | Price
+                        -----------------------------------------------------------------------------------------------------
                         """ + ANSI_RESET
         );
         System.out.println("Enter the vendor: ");
@@ -676,15 +690,15 @@ public class AccountLedgerApp {
         }
         System.out.println(ANSI_CYAN +
                 """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
+                        -----------------------------------------------------------------------------------------------------
+                        =====================================================================================================
                         """ + ANSI_RESET
         );
     }
-
+// loading bar effect
     public static void loading1() throws InterruptedException {
 
-
+// for loop , loops 2 times replacing each system out put in the sam replace using (\r)
         for (int i = 1; i < 2; i++) {
             System.out.print("\rFethching Data [>     ]");
             Thread.sleep(300);
@@ -703,7 +717,7 @@ public class AccountLedgerApp {
         System.out.println();
 
     }
-
+    // loading bar effect faster loading effect
     public static void loading2() throws InterruptedException {
 
 
@@ -725,7 +739,7 @@ public class AccountLedgerApp {
         System.out.println();
 
     }
-
+// stop-motion animation effect using thread and array for loop to print each frame in the same position
     public static void peaceOut() throws InterruptedException {
 
         String frame1 = ("""
@@ -1280,7 +1294,7 @@ public class AccountLedgerApp {
         }
 
     }
-
+// clear screen method using terminal command to clear previous output code in terminal
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
