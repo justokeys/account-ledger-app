@@ -249,7 +249,7 @@ public class AccountLedgerApp {
             Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, Math.abs(amount));
             ledger.add(deposit);
 
-            String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
+            String formatBar = String.format("\n%-12s | %-10s | %-35s | %-20s |%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
             bufferedWriter.write(formatBar);
             bufferedWriter.close();
             System.out.println("Deposit successfully recorded");
@@ -329,7 +329,7 @@ public class AccountLedgerApp {
                 Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
                 ledger.add(deposit);
 
-                String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, -amount);
+                String formatBar = String.format("\n%-12s | %-10s | %-35s | %-20s |%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
                 bufferedWriter.write(formatBar);
                 bufferedWriter.close();
 
@@ -364,9 +364,9 @@ public class AccountLedgerApp {
         ledger.sort(Comparator.comparing(Transactions::getDate).thenComparing(Transactions::getTime).reversed());
         for (Transactions product : ledger) {
             if (product.getAmount() > 0) {
-                System.out.printf("%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+                System.out.printf("%-12s | %-10s | %-35s | %-20s |" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
             } else
-                System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+                System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_RED + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
 
         }
@@ -400,7 +400,7 @@ public class AccountLedgerApp {
 
             if (product.getAmount() > 0)
 
-                System.out.printf("%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+                System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
         }
         System.out.println(ANSI_CYAN +
@@ -431,7 +431,7 @@ public class AccountLedgerApp {
         for (Transactions product : ledger) {
 
             if (product.getAmount() < debits)
-                System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
+                System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_RED + "%.2f\n" + ANSI_RESET, product.getDate(), product.getTime(), product.getDescription(), product.getVendor(), product.getAmount());
 
         }
         System.out.println(ANSI_CYAN +
@@ -520,9 +520,9 @@ public class AccountLedgerApp {
             int monthTime = today.getMonthValue();
             if (userMTime == monthTime && yearTime == userYtime)
                 if (date.getAmount() > 0) {
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
                 } else
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | "+ ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
 
         }
         System.out.println(ANSI_CYAN +
@@ -558,9 +558,9 @@ public class AccountLedgerApp {
             if (monthTime == newMonth && newYear == yearTime)
 
                 if (date.getAmount() > 0) {
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
                 } else
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
 
 
         }
@@ -596,9 +596,9 @@ public class AccountLedgerApp {
             if (yearTime == thisYear)
 
                 if (date.getAmount() > 0) {
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
                 } else
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
 
 
         }
@@ -634,9 +634,9 @@ public class AccountLedgerApp {
             if (yearTime == thisYear - 1)
 
                 if (date.getAmount() > 0) {
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_GREEN + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
                 } else
-                    System.out.printf("%s|%s|%s|%s|" + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s | %-20s | " + ANSI_RED + "%.2f\n" + ANSI_RESET, date.getDate(), date.getTime(), date.getDescription(), date.getVendor(), date.getAmount());
 
         }
         System.out.println(ANSI_CYAN +
@@ -668,9 +668,9 @@ public class AccountLedgerApp {
             if (vendor.getVendor().toUpperCase().contains(theVendor.toUpperCase().toUpperCase())) {
 
                 if (vendor.getAmount() > 0) {
-                    System.out.printf("%s|%s|%s|" + ANSI_Purple + "%s|" + ANSI_RESET + ANSI_GREEN + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s |" + ANSI_Purple + "%-20s |" + ANSI_RESET + ANSI_GREEN + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
                 } else
-                    System.out.printf("%s|%s|%s|" + ANSI_Purple + "%s|" + ANSI_RESET + ANSI_RED + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
+                    System.out.printf("%-12s | %-10s | %-35s |" + ANSI_Purple + "%-20s |" + ANSI_RESET + ANSI_RED + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
 
             }
         }
@@ -707,7 +707,7 @@ public class AccountLedgerApp {
     public static void loading2() throws InterruptedException {
 
 
-        for (int i = 0; i == 1; i++) {
+        for (int i = 0; i < 1; i++) {
             System.out.print("\rFethching Data [>     ]");
             Thread.sleep(300);
             System.out.print("\rFethching Data [>>    ]");
