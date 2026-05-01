@@ -203,12 +203,24 @@ public class AccountLedgerApp {
                     System.out.println("Invalid Character");
                 } else isVaLID = true;
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Try again");
+
                 }
             }
+            String vendor = "";
+            boolean vaild = true;
+            while (vaild) {
+                try {
+                    System.out.print("Enter Payer/Client Name: ");
+                     vendor = thescanner.nextLine();
+                     if (vendor.contains("|")){
+                         System.out.println("Invalid Character");
+                     }else vaild = false;
+                } catch (Exception e) {
+                    System.out.println("Try again");
 
-            System.out.print("Enter Payer/Client Name: ");
-            String vendor = thescanner.nextLine();
+                }
+            }
             double amount = 0.0;
             boolean validN = false;
             while(!validN) {
@@ -268,10 +280,31 @@ public class AccountLedgerApp {
                         ========================================= 
                                       RECORD A DEBIT
                         ========================================= """ + ANSI_RESET);
-                System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
-                String description = thescanner.nextLine();
-                System.out.print("Enter Payer/Client Name: ");
-                String vendor = thescanner.nextLine();
+                String description = " ";
+                boolean isValid = true;
+                while (isValid) {
+                    try {
+                        System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
+                        description = thescanner.nextLine();
+                        if (description.contains("|")){
+                            System.out.println("Invalid Character");
+                        }else isValid = false;
+                    }catch (Exception e){
+                        System.out.println("Try again");
+                    }
+                }
+                boolean valid = true;
+                String vendor = "";
+                while (valid)
+                    try {
+                        System.out.print("Enter Payer/Client Name: ");
+                        vendor = thescanner.nextLine();
+                        if (vendor.contains("|")){
+                            System.out.println("Invalid Character");
+                        }else valid = false;
+                    }catch (Exception e){
+                        System.out.println("Try again");
+                    }
                 boolean validN = false;
                 double amount = 0;
                 while (!validN) {
