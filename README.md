@@ -41,3 +41,12 @@ To run this application locally, it is highly recommended to use **Git Bash**, *
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/YOUR-USERNAME/account-ledger-app.git](https://github.com/YOUR-USERNAME/account-ledger-app.git)
+
+🏗️ Architecture Notes
+Defensive Programming: Implemented while loop "traps" using Double.parseDouble(nextLine()) to prevent InputMismatchException crashes common with the standard Scanner.nextDouble() method.
+
+State Management: Implemented independent while(appRunning) loops for discrete menu states, isolating the "Home", "Ledger", and "Reports" views.
+
+Data Formatting: Uses negative space padding (%-20s) within System.out.printf to force rigid, Excel-style column alignment regardless of string length.
+
+This project was engineered as a comprehensive Capstone to demonstrate proficiency in Java control flow, data structures, and file I/O operations.
