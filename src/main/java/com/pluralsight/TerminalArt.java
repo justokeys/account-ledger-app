@@ -48,12 +48,12 @@ public class TerminalArt {
                 frame.append("\n");//Move to the next row on our canvas.
 
 
-                System.out.print(frame.toString());
+
 
             }
 
 
-
+            System.out.print(frame.toString());
             for (int i = 0; i < width; i++){//prepare for the NEXT frame.
                 rain[i]++;// Move every drop down by 1 row (Gravity).
                 if (rain[i] >= height) {// Move every drop down by 1 row (Gravity).
