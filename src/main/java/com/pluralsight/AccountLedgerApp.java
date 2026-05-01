@@ -115,9 +115,12 @@ public class AccountLedgerApp {
             bufferedReader.close();
 
 
-        } catch (Exception e) {
+        } catch (IOException e){
+            System.out.println("Corrupted line skipped");
+
+        } catch (Exception e ) {
             System.out.println("Something went wrong");
-            throw new RuntimeException(e);
+
         }
 
     }
@@ -186,38 +189,50 @@ public class AccountLedgerApp {
                     DateTimeFormatter.ofPattern("HH:mm:ss");
             String minuteAndSeconds = LocalTime.now().format(fmt2);
 
-
             System.out.println(ANSI_CYAN + """
                     ========================================= 
                                   RECORD A DEPOSIT
                     ========================================= """ + ANSI_RESET);
-            System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
-            String description = thescanner.nextLine();
+            String description = "";
+            boolean isVaLID = false;
+            while (!isVaLID) {
+                try{
+                System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
+                description = thescanner.nextLine();
+                if(description.contains("|")){
+                    System.out.println("Invalid Character");
+                } else isVaLID = true;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             System.out.print("Enter Payer/Client Name: ");
             String vendor = thescanner.nextLine();
             double amount = 0.0;
-             do {
+            boolean validN = false;
+            while(!validN) {
                 try {
                     System.out.print("Enter Deposit Amount: ");
 
                     amount = thescanner.nextDouble();
-                    if (amount < 0) {
+                    if (amount <= 0) {
                         System.out.println("Enter positive amount");
-                    }
 
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input.Try again");
+                    }else validN = true;
+
+                } catch (Exception e) {
+                    System.out.println("Invalid input Try again");
 
                     thescanner.nextLine();
                 }
-            } while(amount <=0);
+            }
 
 
             thescanner.nextLine();
-            System.out.println("Enter (x) to Exit -");
             System.out.print(ANSI_CYAN + """ 
                     ==================================================
-                    Enter command:\s""" + ANSI_RESET);
+                    """ + ANSI_RESET);
 
             Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, Math.abs(amount));
             ledger.add(deposit);
@@ -228,56 +243,74 @@ public class AccountLedgerApp {
             System.out.println("Deposit successfully recorded");
 
 
-        } catch (NumberFormatException e) {
-            System.out.println("invalid input");
-            throw new RuntimeException(e);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("invalid input");
         }
 
 
     }
 
+
+
+
+
     public static void makePayment() {
         clearScreen();
 
-        try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String dateAndTime = LocalDate.now().format(fmt1);
-            DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("HH:mm:ss");
-            String minuteAndSeconds = LocalTime.now().format(fmt2);
-            System.out.println(ANSI_CYAN + """
-                    ========================================= 
-                                  RECORD A DEBIT
-                    ========================================= """ + ANSI_RESET);
-            System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
-            String description = thescanner.nextLine();
-            System.out.print("Enter Payer/Client Name: ");
-            String vendor = thescanner.nextLine();
-            System.out.print("Enter Debit Amount: ");
-            double amount = thescanner.nextDouble();
-            thescanner.nextLine();
-            System.out.println("Enter (X) to Exit -");
-            System.out.print(ANSI_CYAN + """ 
-                    =========================================
-                    Enter command:\s""" + ANSI_RESET);
-            String userinput = thescanner.nextLine();
+            try {
+                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String dateAndTime = LocalDate.now().format(fmt1);
+                DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String minuteAndSeconds = LocalTime.now().format(fmt2);
+                System.out.println(ANSI_CYAN + """
+                        ========================================= 
+                                      RECORD A DEBIT
+                        ========================================= """ + ANSI_RESET);
+                System.out.print("Enter Description (Ex - ergonomic keyboard / Invoice 1001 paid - : ");
+                String description = thescanner.nextLine();
+                System.out.print("Enter Payer/Client Name: ");
+                String vendor = thescanner.nextLine();
+                boolean validN = false;
+                double amount = 0;
+                while (!validN) {
+                    try {
+                        System.out.print("Enter Debit Amount: ");
+                        amount = thescanner.nextDouble();
+                        if (amount >= 0) {
+                            System.out.println("Enter negative number");
+                        } else validN = true;
+                    } catch (Exception e) {
+                        System.out.println("Invalid input");
+                        thescanner.nextLine();
 
-            Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
-            ledger.add(deposit);
+                    }
+                }
 
-            String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, -amount);
-            bufferedWriter.write(formatBar);
-            bufferedWriter.close();
-            System.out.println("Deposit successfully recorded");
+                thescanner.nextLine();
+                System.out.print(ANSI_CYAN + """ 
+                        =========================================
+                        """ + ANSI_RESET);
+
+                Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
+                ledger.add(deposit);
+
+                String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, -amount);
+                bufferedWriter.write(formatBar);
+                bufferedWriter.close();
+
+                System.out.println("Deposit successfully recorded");
 
 
-        } catch (Exception e) {
-            System.out.println("invalid input");
-            throw new RuntimeException(e);
-        }
+            } catch (Exception e) {
+                System.out.println("invalid input");
+
+
+            }
+
+
+
 
 
     }
@@ -599,7 +632,7 @@ public class AccountLedgerApp {
 
         for (Transactions vendor : ledger) {
 
-            if (theVendor.equalsIgnoreCase(vendor.getVendor())) {
+            if (vendor.getVendor().toUpperCase().contains(theVendor.toUpperCase().toUpperCase())) {
 
                 if (vendor.getAmount() > 0) {
                     System.out.printf("%s|%s|%s|" + ANSI_Purple + "%s|" + ANSI_RESET + ANSI_GREEN + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());

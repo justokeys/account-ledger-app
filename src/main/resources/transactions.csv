@@ -140,81 +140,20 @@ date|time|description|vendor|amount
 2026-04-29|11:15:00|Code Repository Hosting|GitHub|-84.00
 2026-04-30|17:30:00|Monthly Parking Passes|City Garage|-450.00
 2026-05-01|08:00:00|Monthly Office Rent|WeWork|-3500.00
-2026-05-02|09:15:30|Cloud Hosting Services|Amazon Web Services|-540.80
-2026-05-03|10:30:00|Invoice 1023 Payment|Apex Retail|6200.00
-2026-05-04|14:20:15|Office Supplies - Pens & Pads|Staples|-45.20
-2026-05-05|11:00:00|Digital Marketing Ads|Google Ads|-850.00
-2026-05-06|16:45:00|Internet Service|Comcast Business|-149.99
-2026-05-07|09:30:00|Software Subscription|JetBrains|-199.00
-2026-05-08|12:15:00|Team Lunch Catering|Panera Bread|-175.50
-2026-05-09|09:00:00|Bi-Weekly Payroll|Gusto|-8450.00
-2026-05-10|10:10:00|Project Management Tool|Asana|-109.99
-2026-05-11|13:25:30|Client Coffee Meeting|Starbucks|-32.10
-2026-05-12|08:30:00|Coffee Supply Delivery|Keurig Commercial|-85.00
-2026-05-13|11:45:00|Legal Consultation|Smith & Associates|-250.00
-2026-05-14|14:10:15|Invoice 1024 Payment|NextGen Startups|4800.00
-2026-05-15|09:05:00|Team Communication App|Slack|-125.00
-2026-05-16|16:20:00|Replacement Monitors (x4)|Dell|-1200.00
-2026-05-17|10:50:30|Social Media Management|Hootsuite|-99.00
-2026-05-18|13:15:00|Invoice 1025 Payment|Global Logistics LLC|3200.00
-2026-05-19|09:00:00|Bi-Weekly Payroll|Gusto|-8450.00
-2026-05-20|11:30:22|Cloud Storage|Dropbox Business|-45.00
-2026-05-21|15:40:00|IT Support Retainer|Geek Squad Business|-500.00
-2026-05-22|08:15:00|Electricity Bill|City Power & Light|-235.40
-2026-05-23|12:00:00|Invoice 1026 Payment|MediCare Plus|7500.00
-2026-05-24|14:45:30|Office Cleaning Service|Sparkle Cleaners|-300.00
-2026-05-25|10:20:00|Business Insurance|Geico Commercial|-185.00
-2026-05-26|16:10:15|Graphic Design Assets|Adobe Creative Cloud|-54.99
-2026-05-27|09:50:00|Water Delivery|Culligan|-45.00
-2026-05-28|13:35:22|Invoice 1027 Payment|TechCorp Inc.|5500.00
-2026-05-29|11:15:00|Code Repository Hosting|GitHub|-84.00
-2026-05-30|15:00:00|Employee Training Course|Udemy Business|-450.00
-2026-05-31|17:30:00|Monthly Parking Passes|City Garage|-450.00
-2026-06-01|08:00:00|Monthly Office Rent|WeWork|-3500.00
-2026-06-02|09:15:30|Cloud Hosting Services|Amazon Web Services|-560.25
-2026-06-03|10:30:00|Invoice 1028 Payment|BlueWave Financial|8200.00
-2026-06-04|14:20:15|Office Supplies - Printer|Staples|-350.00
-2026-06-05|11:00:00|Digital Marketing Ads|Google Ads|-850.00
-2026-06-06|16:45:00|Internet Service|Comcast Business|-149.99
-2026-06-07|09:30:00|Software Subscription|JetBrains|-199.00
-2026-06-08|12:15:00|Team Lunch Catering|Chipotle|-185.00
-2026-06-09|09:00:00|Bi-Weekly Payroll|Gusto|-8450.00
-2026-06-10|10:10:00|Project Management Tool|Asana|-109.99
-2026-06-11|13:25:30|Client Lunch Meeting|Local Steakhouse|-210.50
-2026-06-12|08:30:00|Coffee Supply Delivery|Keurig Commercial|-85.00
-2026-06-13|11:45:00|SEO Consulting Services|RankUp Media|-1500.00
-2026-06-14|14:10:15|Invoice 1029 Payment|NextGen Startups|4800.00
-2026-06-15|09:05:00|Team Communication App|Slack|-125.00
-2026-06-16|16:20:00|Conference Tickets (x2)|Tech Innovate 2026|-1800.00
-2026-06-17|10:50:30|Social Media Management|Hootsuite|-99.00
-2026-06-18|13:15:00|Invoice 1030 Payment|Apex Retail|6200.00
-2026-06-19|09:00:00|Bi-Weekly Payroll|Gusto|-8450.00
-2026-06-20|11:30:22|Cloud Storage|Dropbox Business|-45.00
-2026-06-21|15:40:00|Team Building Event|Escape Room USA|-350.00
-2026-06-22|08:15:00|Electricity Bill|City Power & Light|-245.80
-2026-06-23|12:00:00|Invoice 1031 Payment|MediCare Plus|7500.00
-2026-06-24|14:45:30|Office Cleaning Service|Sparkle Cleaners|-300.00
-2026-06-25|10:20:00|Business Insurance|Geico Commercial|-185.00
-2026-06-26|16:10:15|Graphic Design Assets|Adobe Creative Cloud|-54.99
-2026-06-27|09:50:00|Water Delivery|Culligan|-45.00
-2026-06-28|13:35:22|Invoice 1032 Payment|TechCorp Inc.|5500.00
-2026-06-29|11:15:00|Code Repository Hosting|GitHub|-84.00
-2026-06-30|15:00:00|Q3 Accounting Software|QuickBooks|-85.00
-2026-07-01|17:30:00|Monthly Parking Passes|City Garage|-450.00
-2026-07-02|08:00:00|Monthly Office Rent|WeWork|-3500.00
-2026-07-03|09:15:30|Cloud Hosting Services|Amazon Web Services|-580.10
-2026-07-04|10:30:00|Invoice 1033 Payment|Global Logistics LLC|3200.00
-2026-07-05|14:20:15|Office Supplies - Cables|Staples|-85.40
-2026-07-06|11:00:00|Digital Marketing Ads|Google Ads|-850.00
-2026-07-07|09:00:00|Bi-Weekly Payroll|Gusto|-8450.00
-2026-07-08|12:15:00|Team Lunch Catering|Shake Shack|-210.00
-2026-07-09|10:10:00|Project Management Tool|Asana|-109.99
-2026-07-10|13:25:30|Flight to Conference|Southwest Airlines|-380.00
-2026-07-11|08:30:00|Coffee Supply Delivery|Keurig Commercial|-85.00
-2026-07-12|11:45:00|Hotel for Conference|Hilton|-650.00
-2026-07-13|14:10:15|Invoice 1034 Payment|NextGen Startups|4800.00
 2026-04-27|13:57:49|Gigabyte Rtx 5090|MicroCenter|2599.00
 2026-04-27|14:11:27|ice tea campaign |Red Diamond|340.98
 2026-04-27|14:31:35|x|kdjkjfs|293.00
 2026-04-27|14:51:21|x|x|22.00
 2026-04-28|13:51:50|Invoice 1002 paid|jamesB|-2319.00
+2026-04-30|13:43:34|2222|424323|232323.00
+2026-04-30|13:47:40|123|dallas|20.00
+2026-04-30|13:48:23|1234|keys|500.00
+2026-04-30|14:08:52|toto|momo|300.00
+2026-04-30|14:14:56|momo|toto|100.00
+2026-04-30|14:18:49|momo|toto|100.00
+2026-04-30|15:46:18|sfgsdf|toto|4.00
+2026-04-30|17:46:10|toto|momo|5.00
+2026-04-30|17:56:58|TPTO|||MOMO|5.00
+2026-04-30|18:13:45|toto|momo|1.00
+2026-04-30|18:16:16|toto|mnomo|2.00
+2026-04-30|19:32:37|ghff|jhgjh|76777.00

@@ -47,7 +47,7 @@ public class TerminalArt {
 
             }
 
-            System.out.print(frame.toString());
+           System.out.print(frame.toString());
 
             for (int i = 0; i < width; i++){
                 rain[i]++;
