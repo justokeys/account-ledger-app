@@ -7,7 +7,7 @@ public class TerminalArt {
    // method displays Matrix movie ASCii rain drop effect
     public static void matrixDropFx() throws InterruptedException {
         // sets the width and height of the effect
-        int width = 60;
+        int width = 50;
         int height = 15;
         //sets the width to array the size of the width, will track the y position set in each index
         int[] rain = new int[width];

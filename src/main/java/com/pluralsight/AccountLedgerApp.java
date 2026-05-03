@@ -32,7 +32,7 @@ public class AccountLedgerApp {
     public static void homeScreen() throws InterruptedException {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        double currentB = currentTotal();
+        //double currentB = currentTotal();
 
 
         System.out.println(ANSI_GREEN +
@@ -43,7 +43,7 @@ public class AccountLedgerApp {
                         ╚════════════════════════════════════════════════╝
                         """ + ANSI_RESET
         );
-       //TerminalArt.matrixDropFx();
+       TerminalArt.matrixDropFx();
 
         boolean appRunning = true;
 
@@ -55,9 +55,9 @@ public class AccountLedgerApp {
                                *             Manage Account             *
                             ==================================================
                             """ + ANSI_RESET);
-            if(currentB < 0) {
-                System.out.printf("Current balance -    [-%.2f]\n", currentB);
-            }else System.out.printf("Current balance - [-%.2f ]\n", currentB);
+          //  if(currentB < 0) {
+               // System.out.printf("Current balance -    [-%.2f]\n", currentB);
+           // }else System.out.printf("Current balance - [-%.2f ]\n", currentB);
 
             System.out.println(
                     """
@@ -82,8 +82,8 @@ public class AccountLedgerApp {
                     break;
                 case "X":
                     appRunning = false;
-                    //peaceOut();
-                    //thankYou();
+                    peaceOut();
+                    thankYou();
                     break;
                 default:
                     System.out.println("Wrong input");
@@ -263,7 +263,7 @@ public class AccountLedgerApp {
             ledger.add(deposit);
             // string format to evenly space
 
-            String formatBar = String.format("\n%-12s | %-10s | %-35s | %-20s |%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
+            String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
             bufferedWriter.write(formatBar);
             bufferedWriter.close();
             System.out.println("Deposit successfully recorded");
@@ -275,10 +275,6 @@ public class AccountLedgerApp {
 
 
     }
-
-
-
-
 
     public static void makePayment() {
         clearScreen();
@@ -346,7 +342,7 @@ public class AccountLedgerApp {
                 Transactions deposit = new Transactions(dateAndTime, minuteAndSeconds, description, vendor, amount);
                 ledger.add(deposit);
 
-                String formatBar = String.format("\n%-12s | %-10s | %-35s | %-20s |%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
+                String formatBar = String.format("\n%s|%s|%s|%s|%.2f", dateAndTime, minuteAndSeconds, description, vendor, amount);
                 bufferedWriter.write(formatBar);
                 bufferedWriter.close();
 
@@ -685,13 +681,17 @@ public class AccountLedgerApp {
 
         for (Transactions vendor : ledger) {
 
-            if (vendor.getVendor().toUpperCase().contains(theVendor.toUpperCase().toUpperCase())) {
 
+            if (vendor.getVendor().toUpperCase().contains(theVendor.toUpperCase().toUpperCase())) {
+                if (vendor.getVendor() == null){
+                    System.out.println("Item not found");
+                }
                 if (vendor.getAmount() > 0) {
                     System.out.printf("%-12s | %-10s | %-35s |" + ANSI_Purple + "%-20s |" + ANSI_RESET + ANSI_GREEN + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
-                } else
+                } else if(vendor.getAmount() < 0) {
                     System.out.printf("%-12s | %-10s | %-35s |" + ANSI_Purple + "%-20s |" + ANSI_RESET + ANSI_RED + "%.2f\n" + ANSI_RESET, vendor.getDate(), vendor.getTime(), vendor.getDescription(), vendor.getVendor(), vendor.getAmount());
-
+                }
+                else System.out.println("Not found try again");
             }
         }
         System.out.println(ANSI_CYAN +
